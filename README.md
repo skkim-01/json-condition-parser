@@ -6,6 +6,12 @@
 ##### using go template package : [ https://golang.org/pkg/text/template/ ]
 ###### easily parse json condition string [eq, ne, lt, gte, ...]
 
+#### caution
+##### map : x
+##### slice : x
+##### struct without map/slice : o
+
+
 #### type definitions
 ###### support case 1. 
 ```json
