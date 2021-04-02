@@ -51,23 +51,24 @@ func compareValue(op string, lp interface{}, rp interface{}, buf *bytes.Buffer) 
 }
 
 // compareMap : compare json map. and/or case
-func compareMap(lp interface{}, subConditions map[string]interface{}) []byte {
-	var lParam interface{}
-
-	switch lp.(type) {
-	// when src is integer, convert float64
+func compareMap(lParam interface{}, subConditions map[string]interface{}) []byte {
+	switch lParam.(type) {
+	// when lparam is integer, convert float64
 	case int, int32, uint32, int64, uint64:
-		lParam = jsonTypeConverter(lp)
+		lParam = jsonTypeConverter(lParam)
 		break
-
-	// other types
-	default:
-		lParam = lp
 	}
 
 	buf := new(bytes.Buffer)
 	// condition [key : operator / value : operand]
 	for op, rParam := range subConditions {
+		switch rParam.(type) {
+		// when rparam is integer, convert float64
+		case int, int32, uint32, int64, uint64:
+			rParam = jsonTypeConverter(rParam)
+			break
+		}
+
 		compareValue(op, lParam, rParam, buf)
 	}
 
